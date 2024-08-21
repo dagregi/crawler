@@ -1,7 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
-	fmt.Println("Web Crawler in Go")
+	if len(os.Args) > 2 {
+		fmt.Println("too many arguments provided")
+		os.Exit(1)
+	} else if len(os.Args) == 1 {
+		fmt.Println("no website provided")
+		os.Exit(1)
+	}
+
+	baseURL := os.Args[1]
+	fmt.Printf("starting crawl of: %s...\n", baseURL)
 }
