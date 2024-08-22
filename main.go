@@ -6,21 +6,22 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("no website provided")
+		return
+	}
 	if len(os.Args) > 2 {
 		fmt.Println("too many arguments provided")
-		os.Exit(1)
-	} else if len(os.Args) == 1 {
-		fmt.Println("no website provided")
-		os.Exit(1)
+		return
 	}
+	rawBaseURL := os.Args[1]
 
-	baseURL := os.Args[1]
-	fmt.Printf("starting crawl of: %s...\n", baseURL)
+	fmt.Printf("starting crawl of: %s...\n", rawBaseURL)
 
-	body, err := getHTML(baseURL)
-	if err != nil {
-		fmt.Println(err)
+	pages := make(map[string]int)
+	crawlPage(rawBaseURL, rawBaseURL, pages)
+
+	for normalizedURL, count := range pages {
+		fmt.Printf("%d - %s\n", count, normalizedURL)
 	}
-
-	fmt.Print(body)
 }
