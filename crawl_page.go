@@ -12,9 +12,7 @@ func (cfg *config) crawlPage(rawCurrentURL string) {
 		cfg.wg.Done()
 	}()
 
-	cfg.mu.Lock()
-	cfg.mu.Unlock()
-	if len(cfg.pages) >= cfg.maxPages {
+	if cfg.lenPages() >= cfg.maxPages {
 		return
 	}
 
